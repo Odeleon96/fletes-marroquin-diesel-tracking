@@ -2,24 +2,47 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=https://michelle-glen-futures-dangerous.trycloudflare.com">
-  <title>Diesel Tracker FMS — Fletes Marroquín</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diesel Tracker FMS | Fletes Marroquín</title>
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
   <style>
-    body { font-family: -apple-system, sans-serif; background: #0d1b35; color: white;
-           display: flex; flex-direction: column; align-items: center; justify-content: center;
-           min-height: 100vh; margin: 0; text-align: center; }
-    .logo { font-size: 2.5rem; font-weight: 800; margin-bottom: 8px; }
-    .orange { color: #F5820A; }
-    .sub { color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-bottom: 32px; }
-    .btn { background: #0057A8; color: white; padding: 14px 32px; border-radius: 12px;
-           text-decoration: none; font-weight: 600; font-size: 1rem; }
-    .btn:hover { background: #003f7d; }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:#0f172a;color:#94a3b8;font-family:system-ui,-apple-system,sans-serif;
+         display:flex;align-items:center;justify-content:center;height:100vh;text-align:center}
+    .icon{font-size:3rem;margin-bottom:1rem}
+    .title{font-size:1.3rem;font-weight:700;color:#f1f5f9;margin-bottom:.5rem}
+    .sub{font-size:.9rem;color:#64748b;margin-bottom:1.5rem}
+    #msg{font-size:.85rem;color:#94a3b8}
+    .btn{display:inline-block;margin-top:1.2rem;padding:.6rem 1.8rem;
+         background:#3b82f6;color:#fff;border-radius:8px;text-decoration:none;
+         font-weight:600;font-size:.9rem}
   </style>
 </head>
 <body>
-  <div class="logo">Diesel Tracker <span class="orange">FMS</span></div>
-  <div class="sub">Fletes Marroquín · Monitoreo de precios México</div>
-  <a class="btn" href="https://michelle-glen-futures-dangerous.trycloudflare.com">Abrir Sistema →</a>
-  <script>window.location.href="https://michelle-glen-futures-dangerous.trycloudflare.com";</script>
+  <div>
+    <div class="icon">⛽</div>
+    <div class="title">Diesel Tracker FMS</div>
+    <div class="sub">Fletes Marroquín</div>
+    <div id="msg">Conectando al servidor...</div>
+    <a id="btn" class="btn" href="#" style="display:none">Abrir Sistema →</a>
+  </div>
+  <script>
+    var ts = new Date().getTime();
+    fetch("config.json?v=" + ts, {cache: "no-store"})
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        document.getElementById("msg").textContent = "Redirigiendo...";
+        window.location.replace(d.url);
+      })
+      .catch(function(){
+        document.getElementById("msg").textContent = "No se pudo obtener la URL del servidor.";
+        var btn = document.getElementById("btn");
+        btn.href = "#";
+        btn.textContent = "Reintentar";
+        btn.style.display = "inline-block";
+        btn.onclick = function(){ window.location.reload(); return false; };
+      });
+  </script>
 </body>
 </html>
